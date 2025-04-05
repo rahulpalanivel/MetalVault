@@ -16,8 +16,9 @@ class Addnewtab extends StatefulWidget {
 
 class _AddnewtabState extends State<Addnewtab> {
 List<Uint8List> images = [];
+var i = 0;
 
-  void selectImage() async {
+  Future<void> selectImage() async {
     var pickedFile = await ImagePicker().pickMultiImage();
     for(var file in pickedFile)
     {
@@ -64,18 +65,31 @@ List<Uint8List> images = [];
                       width: Devicesize.width,
                       child: Center(child: OutlinedButton(onPressed: (){
                         setState(() {
-                          selectImage();
+                          selectImage().whenComplete(()=> setState(() {
+                          }));
                         });
                       }, child: Text("Upload"))),
                     ) : 
-                    Container(
-                      decoration: BoxDecoration(
-                        color:  const Color.fromARGB(255, 235, 228, 228),
-                        borderRadius: BorderRadius.circular(20)
+                    GestureDetector(
+                      onTap: () {
+                        
+                      },
+                      onHorizontalDragEnd: (details) {
+                        if(i < images.length-1){
+                          setState(() {
+                          i++;
+                        });
+                        }
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color:  const Color.fromARGB(255, 235, 228, 228),
+                          borderRadius: BorderRadius.circular(20)
+                        ),
+                        height: Devicesize.height!/6,
+                        width: Devicesize.width,
+                        child: Image.memory(images[i], fit: BoxFit.cover),
                       ),
-                      height: Devicesize.height!/6,
-                      width: Devicesize.width,
-                      child: Image.memory(images[0], fit: BoxFit.cover),
                     ),
                   ],
                 ),
