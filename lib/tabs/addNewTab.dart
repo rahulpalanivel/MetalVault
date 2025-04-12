@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:gold/Utils/deviceSize.dart';
+import 'package:gold/data/repository/datarepository.dart';
 import 'package:gold/widgets/button.dart';
 import 'package:gold/widgets/datepicker.dart';
 import 'package:gold/widgets/dropDown.dart';
@@ -15,21 +16,11 @@ class Addnewtab extends StatefulWidget {
 }
 
 class _AddnewtabState extends State<Addnewtab> {
-List<Uint8List> images = [];
-var i = 0;
+    List<Uint8List> images = [];
+    List<Uint8List> bills = [];
+    var i = 0;
+    var j = 0;
 
-  Future<void> selectImage() async {
-    var pickedFile = await ImagePicker().pickMultiImage();
-    for(var file in pickedFile)
-    {
-      List<int> imageBytes = (await file.readAsBytes()) as List<int>;
-      Uint8List imageUint8List = Uint8List.fromList(imageBytes);
-      images.add(imageUint8List);
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
     TextEditingController name = TextEditingController();
     TextEditingController weight = TextEditingController();
     TextEditingController date = TextEditingController(text: DateTime.now().toString());
@@ -40,9 +31,65 @@ var i = 0;
     TextEditingController tax = TextEditingController();
     TextEditingController others = TextEditingController();
     TextEditingController price = TextEditingController();
-    String Type;
-    String Metal;
-    String Purity;
+    late String type;
+    late String metal;
+    late String purity;
+
+  Future<void> selectImage() async {
+    var pickedFile = await ImagePicker().pickMultiImage();
+    images.clear();
+    i=0;
+    for(var file in pickedFile)
+    {
+      List<int> imageBytes = (await file.readAsBytes()) as List<int>;
+      Uint8List imageUint8List = Uint8List.fromList(imageBytes);
+      images.add(imageUint8List);
+    }
+  }
+
+  Future<void> selectBills() async {
+    var pickedFile = await ImagePicker().pickMultiImage();
+    bills.clear();
+    j=0;
+    for(var file in pickedFile)
+    {
+      List<int> imageBytes = (await file.readAsBytes()) as List<int>;
+      Uint8List imageUint8List = Uint8List.fromList(imageBytes);
+      bills.add(imageUint8List);
+    }
+  }
+
+  void addToDb(){
+    Datarepository.addNewData(images, bills, name.text, double.parse(weight.text), DateTime.parse(date.text), type, metal, purity, desc.text, billingName.text, int.parse(yrs.text), double.parse(wastage.text), double.parse(tax.text), others.text, double.parse(price.text));
+  }
+
+  void clearAll(){
+    setState(() {
+      List<Uint8List> images = [];
+      List<Uint8List> bills = [];
+      var i = 0;
+      var j = 0;
+
+      name.clear();
+      weight.clear();
+      date.clear(); 
+      desc.clear(); 
+      billingName.clear(); 
+      yrs.clear(); 
+      wastage.clear(); 
+      tax.clear(); 
+      others.clear(); 
+      price.clear(); 
+      type = "";
+      metal = "";
+      purity = "";
+    });
+  }
+  
+
+  @override
+  Widget build(BuildContext context) {
+    
     return Scaffold(
       backgroundColor:  Colors.white,
       body: SingleChildScrollView(
@@ -64,21 +111,31 @@ var i = 0;
                       height: Devicesize.height!/6,
                       width: Devicesize.width,
                       child: Center(child: OutlinedButton(onPressed: (){
-                        setState(() {
-                          selectImage().whenComplete(()=> setState(() {
-                          }));
-                        });
+                        
+                        selectImage().whenComplete(()=> setState(() {
+                        }));
+                        
                       }, child: Text("Upload"))),
                     ) : 
                     GestureDetector(
                       onTap: () {
-                        
+                        selectImage().whenComplete(()=> setState(() {
+                          }));
                       },
                       onHorizontalDragEnd: (details) {
-                        if(i < images.length-1){
-                          setState(() {
-                          i++;
-                        });
+                        if(details.primaryVelocity! < 0){
+                          if(i < images.length-1){
+                            setState(() {
+                            i++;
+                            });
+                          }
+                        }
+                        if(details.primaryVelocity! > 0){
+                          if(i > 0){
+                            setState(() {
+                            i--;
+                            });
+                          }
                         }
                       },
                       child: Container(
@@ -100,7 +157,15 @@ var i = 0;
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text("Upload Bills:"),
-                    OutlinedButton(onPressed: (){}, child: Text("Upload"))
+                    bills.isEmpty?
+                    OutlinedButton(onPressed: (){
+                      selectBills().whenComplete(()=> setState(() {
+                      }));
+                    }, child: Text("Upload")) :
+                    TextButton(onPressed: (){
+                      selectBills().whenComplete(()=>setState(() {
+                      }));
+                    }, child: Text("Bills"))
                   ],
                 ),
               ),
@@ -138,7 +203,7 @@ var i = 0;
                     Column(
                       children: [
                         Text("Type"),
-                        Dropdown(items: ["Ring", "Earring", "Chain", "Other"], defaultItem: "Other", updatedValue: (String value){ Type = value;})
+                        Dropdown(items: ["Ring", "Earring", "Chain", "Other"], defaultItem: "Other", updatedValue: (String value){ type = value;})
                       ],
                     )
                   ],
@@ -152,13 +217,13 @@ var i = 0;
                     Column(
                       children: [
                         Text("Metal"),
-                        Dropdown(items: ["Gold", "Silver", "Other"], defaultItem: "Other", updatedValue: (String value){Metal = value;})
+                        Dropdown(items: ["Gold", "Silver", "Other"], defaultItem: "Other", updatedValue: (String value){metal = value;})
                       ],
                     ),
                     Column(
                       children: [
                         Text("Purity"),
-                        Dropdown(items: ["GIS", "916", "Other"], defaultItem: "Other", updatedValue: (String value){Purity = value;})
+                        Dropdown(items: ["GIS", "916", "Other"], defaultItem: "Other", updatedValue: (String value){purity = value;})
                       ],
                     ),
                   ],
@@ -223,7 +288,10 @@ var i = 0;
               ),
               Padding(
                 padding: const EdgeInsets.all(5.0),
-                child: Button(text: "Save", function: (){}),
+                child: Button(text: "Save", function: (){
+                  addToDb();
+                  clearAll();
+                }),
               ),
           ],),
         ),

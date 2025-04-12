@@ -17,55 +17,61 @@ class GolddataAdapter extends TypeAdapter<Golddata> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Golddata(
-      (fields[0] as List).cast<String>(),
-      (fields[1] as List).cast<String>(),
-      fields[2] as String,
-      fields[3] as double,
-      fields[4] as DateTime,
-      fields[5] as String,
+      fields[0] as int,
+      (fields[1] as List).cast<Uint8List>(),
+      (fields[2] as List).cast<Uint8List>(),
+      fields[3] as String,
+      fields[4] as double,
+      fields[5] as DateTime,
       fields[6] as String,
       fields[7] as String,
       fields[8] as String,
       fields[9] as String,
-      fields[10] as int,
-      fields[11] as double,
+      fields[10] as String,
+      fields[11] as int,
       fields[12] as double,
-      fields[13] as String,
+      fields[13] as double,
+      fields[14] as String,
+      fields[15] as double,
     );
   }
 
   @override
   void write(BinaryWriter writer, Golddata obj) {
     writer
-      ..writeByte(14)
+      ..writeByte(16)
       ..writeByte(0)
-      ..write(obj.photo)
+      ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.bill)
+      ..write(obj.photo)
       ..writeByte(2)
-      ..write(obj.name)
+      ..write(obj.bill)
       ..writeByte(3)
-      ..write(obj.weight)
+      ..write(obj.name)
       ..writeByte(4)
-      ..write(obj.date)
+      ..write(obj.weight)
       ..writeByte(5)
-      ..write(obj.type)
+      ..write(obj.date)
       ..writeByte(6)
-      ..write(obj.metal)
+      ..write(obj.type)
       ..writeByte(7)
-      ..write(obj.purity)
+      ..write(obj.metal)
       ..writeByte(8)
-      ..write(obj.desc)
+      ..write(obj.purity)
       ..writeByte(9)
-      ..write(obj.billingName)
+      ..write(obj.desc)
       ..writeByte(10)
-      ..write(obj.yearsOld)
+      ..write(obj.billingName)
       ..writeByte(11)
-      ..write(obj.wastage)
+      ..write(obj.yearsOld)
       ..writeByte(12)
-      ..write(obj.tax)
+      ..write(obj.wastage)
       ..writeByte(13)
-      ..write(obj.others);
+      ..write(obj.tax)
+      ..writeByte(14)
+      ..write(obj.others)
+      ..writeByte(15)
+      ..write(obj.price);
   }
 
   @override
