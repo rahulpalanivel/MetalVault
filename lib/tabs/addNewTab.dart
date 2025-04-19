@@ -60,7 +60,15 @@ class _AddnewtabState extends State<Addnewtab> {
   }
 
   void addToDb(){
-    Datarepository.addNewData(images, bills, name.text, double.parse(weight.text), DateTime.parse(date.text), type, metal, purity, desc.text, billingName.text, int.parse(yrs.text), double.parse(wastage.text), double.parse(tax.text), others.text, double.parse(price.text));
+    Datarepository.addNewData(images, bills, name.text, double.parse(weight.text), DateTime.parse(date.text), type, metal, purity, desc.text, billingName.text, parseDate(date.text), double.parse(wastage.text), double.parse(tax.text), others.text, double.parse(price.text));
+  }
+
+  int parseDate(String date){
+    var years = 0;
+    DateTime nowdate = DateTime.now();
+    DateTime find = DateTime.parse(date);
+    var yrs = find.year - nowdate.year;
+    return years;
   }
 
   void clearAll(){
@@ -239,19 +247,10 @@ class _AddnewtabState extends State<Addnewtab> {
                 ),
               ),
               Padding(padding: EdgeInsets.all(5), 
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Column(
                 children: [
-                  Column(
-                    children: [
-                      Text("Billing Name:"),
-                      TextBox(name: billingName, height: Devicesize.height!/15, width: Devicesize.width!/1.5,)
-                    ],
-                  ),
-                  Column(children: [
-                    Text("Years old"),
-                    TextBox(name: yrs, height: Devicesize.height!/15, width: Devicesize.width!/4,)
-                  ],)
+                  Text("Billing Name:"),
+                  TextBox(name: billingName, height: Devicesize.height!/15, width: Devicesize.width,)
                 ],
               ),),
               Padding(padding: EdgeInsets.all(5), 

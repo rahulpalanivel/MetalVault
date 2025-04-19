@@ -60,6 +60,7 @@ class Datarepository {
   }
 
   static Golddata getData(int id){
-    
+    Golddata data = DataBox.values.toList().where((element)=>element.id == id).first;
+    return data;
   }
 }

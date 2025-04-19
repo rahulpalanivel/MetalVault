@@ -153,8 +153,8 @@ class Saved extends StatelessWidget {
       children: [
         Align(alignment: Alignment.centerLeft, child: Text("Saved", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),)),
         Container(
-          height: Devicesize.height!/4,
-          width: Devicesize.width!/1.1,
+          height: Devicesize.height!/3.3,
+          width: Devicesize.width!/1,
           child: GridView.builder(
             itemCount: Datarepository.getDataSize(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2), 
@@ -186,36 +186,19 @@ class Card extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             color: Colors.white,
           ),
-          height: Devicesize.height!/4,
-          width: Devicesize.width!/2.5,
           child: Column(
             children: [
               Container(
+                height: Devicesize.height!/7.5,
                 decoration: BoxDecoration(
+                  image: DecorationImage(image: Image.memory(data.photo[0]).image, fit: BoxFit.cover),
                   borderRadius: BorderRadius.circular(20)
                 ),
-                child: Image.memory(data.photo[0], fit: BoxFit.cover,),
               ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20)
-                ),
-                height: Devicesize.height!/16,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text("Name:"),
-                        Text(data.name),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Text(data.name, style: TextStyle(fontSize: 16),),
+              )
             ],
           ),
         ),
