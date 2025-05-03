@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gold/Utils/deviceSize.dart';
-import 'package:gold/Utils/getGoldRateAPI.dart';
 import 'package:gold/data/models/goldData.dart';
 import 'package:gold/screens/start.dart';
 import 'package:hive/hive.dart';
@@ -29,7 +28,6 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     initHivedb();
-    //Getgoldrateapi.fetchData();
   }
 
   Future<void> initHivedb() async {

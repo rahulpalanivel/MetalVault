@@ -63,4 +63,20 @@ class Datarepository {
     Golddata data = DataBox.values.toList().where((element)=>element.id == id).first;
     return data;
   }
+
+  static double getPurchaseVal(){
+    double val = 0;
+    for(int i=1; i<=DataBox.length; i++){
+      val = val + DataBox.get(i).price;
+    }
+    return val;
+  }
+
+  static double getTotalWeight(){
+    double gram = 0;
+    for(int i=1; i<=DataBox.length; i++){
+      gram = gram + DataBox.get(i).weight;
+    }
+    return gram;
+  }
 }
