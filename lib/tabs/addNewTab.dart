@@ -211,7 +211,7 @@ class _AddnewtabState extends State<Addnewtab> {
                     Column(
                       children: [
                         Text("Type"),
-                        Dropdown(items: ["Ring", "Earring", "Chain", "Other"], defaultItem: "Other", updatedValue: (String value){ type = value;})
+                        Dropdown(items: ["Ring", "Earring", "Chain", "Bangle", "Necklace", "Other"], defaultItem: "Other", updatedValue: (String value){ type = value;})
                       ],
                     )
                   ],
@@ -249,7 +249,7 @@ class _AddnewtabState extends State<Addnewtab> {
               Padding(padding: EdgeInsets.all(5), 
               child: Column(
                 children: [
-                  Text("Billing Name:"),
+                  Text("Jwellery Name:"),
                   TextBox(name: billingName, height: Devicesize.height!/15, width: Devicesize.width,)
                 ],
               ),),

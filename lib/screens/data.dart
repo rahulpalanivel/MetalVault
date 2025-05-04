@@ -7,8 +7,9 @@ import 'package:gold/data/repository/datarepository.dart';
 import 'package:gold/widgets/button.dart';
 
 class DataScreen extends StatefulWidget {
-  DataScreen({super.key, required this.id});
+  DataScreen({super.key, required this.id, required this.currentGoldPrice});
   final int id;
+  final double currentGoldPrice;
 
   @override
   State<DataScreen> createState() => _DataScreenState();
@@ -89,7 +90,7 @@ class _DataScreenState extends State<DataScreen> {
                             child: Column(
                               children: [
                                 Text("Current value", style: TextStyle(fontSize: 20)),
-                                Text("INR 5000", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),)
+                                Text("${widget.currentGoldPrice * data.weight}", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),)
                               ],
                             ),
                           )
