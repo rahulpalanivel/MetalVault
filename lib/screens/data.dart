@@ -32,9 +32,10 @@ class _DataScreenState extends State<DataScreen> {
   int _currentImageIndex = 0;
 
   // Function to handle data deletion
-  void _deleteData() {
+  void _deleteData(int id) {
     // TODO: Implement actual deletion logic using Datarepository
     print("Deleting data with ID: ${widget.id}");
+    Datarepository.delete(id);
     // Example: Datarepository.deleteData(widget.id);
 
     // After deletion, navigate back
@@ -143,7 +144,8 @@ class _DataScreenState extends State<DataScreen> {
                         child: const Text("Delete"),
                         onPressed: () {
                           Navigator.of(context).pop(); // Dismiss the dialog
-                          _deleteData(); // Call the delete function
+                          _deleteData(widget.id); // Call the delete function
+
                         },
                       ),
                     ],

@@ -67,7 +67,9 @@ class Datarepository {
   static double getPurchaseVal(){
     double val = 0;
     for(int i=1; i<=DataBox.length; i++){
-      val = val + DataBox.get(i).price;
+      if(DataBox.get(i) != null){
+        val = val + DataBox.get(i).price;
+      }
     }
     return val;
   }
@@ -75,8 +77,14 @@ class Datarepository {
   static double getTotalWeight(){
     double gram = 0;
     for(int i=1; i<=DataBox.length; i++){
-      gram = gram + DataBox.get(i).weight;
+      if(DataBox.get(i) != null){
+        gram = gram + DataBox.get(i).weight;
+      }
     }
     return gram;
+  }
+
+  static void delete(int id){
+    DataBox.delete(id);
   }
 }
