@@ -534,12 +534,12 @@ class CategoryRow extends StatefulWidget {
 class _CategoryRowState extends State<CategoryRow> {
   // Map category names to appropriate Font Awesome icons
   final Map<String, IconData> categoryIcons = {
-    "Ring": FontAwesomeIcons.ring,
-    "Necklace": FontAwesomeIcons.gem, // Using gem for now
-    "Bangle": FontAwesomeIcons.solidCircle, // Using solid circle for now
-    "Chain": FontAwesomeIcons.link,
-    "Earring": FontAwesomeIcons.gem, // Using gem for now
-    "Others": FontAwesomeIcons.ellipsisH,
+    "Ring": FontAwesomeIcons.ring, // or FontAwesomeIcons.ringsWedding
+    "Necklace": FontAwesomeIcons.gem, // Often used to represent jewelry with stones
+    "Bangle": FontAwesomeIcons.circleNotch, // Represents a circular, open form
+    "Chain": FontAwesomeIcons.link, // Already appropriate for a chain
+    "Earring": FontAwesomeIcons.star, // Directly represents an ear, where earrings are worn
+    "Others": FontAwesomeIcons.ellipsisH, // A standard icon for "more" or "others"
   };
 
   @override
